@@ -1,0 +1,103 @@
+<% layout('./layouts/boilerplate') -%>
+<body class="show-page">
+  <div class="row mt-3 show-win">
+    <div class="col-8 offset-2">
+      <h3><b><%= sweet.name %></b></h3>
+
+      <div class="card listing-card">
+        <img
+          src="<%= sweet.image.url %>"
+          class="show-img card-img-top offset-3 mb-5 mt-5"
+        />
+        <div class="card-body">
+          <p class="card-text">
+            <span class="owner"><b>Owner: </b><%= sweet.owner ? sweet.owner.username : 'Unknown' %></span> <!-- Added null check -->
+            <span class="sweet-description"><%= sweet.description %></span>
+            <span class="sweet-price">
+              <b>Price: </b>
+              $ <%= sweet.price.toLocaleString("en-IN") %>
+            </span>
+            <span class="sweet-category"><b>Category: </b><%= sweet.category %></span>
+            <span class="sweet-quantity"><b>Quantity Available: </b><%= sweet.quantity %></span>
+            <span class="sweet-availability"><b>Available: </b><%= sweet.isAvailable ? "Yes" : "No" %></span>
+            <span class="sweet-weight"><b>Weight: </b><%= sweet.weight || 'N/A' %></span>
+            <span class="sweet-ingredients"><b>Ingredients: </b><%= sweet.ingredients && sweet.ingredients.length > 0 ? sweet.ingredients : 'N/A' %></span>
+            <span class="sweet-allergens"><b>Allergens: </b><%= sweet.allergens && sweet.allergens.length > 0 ? sweet.allergens.join(', ') : 'None' %></span>
+          </p>
+        </div>
+      </div>
+
+      <% if (currUser && sweet.owner && currUser._id.toString() === sweet.owner._id.toString()) { %> <!-- Added null check -->
+        <div class="btns mb-3">
+          <a href="/sweets/<%= sweet._id %>/edit" class="btn btn-dark edit-btn">Edit this Sweet</a>
+          <form method="POST" action="/sweets/<%= sweet._id %>?_method=DELETE">
+            <button class="btn btn-dark">Delete this sweet</button>
+          </form>
+          <form method="POST" action="/sweets/<%= sweet._id %>/restock" class="d-inline">
+            <input type="number" name="quantity" value="10" min="1" class="form-control d-inline w-auto">
+            <button type="submit" class="btn btn-warning">Restock</button>
+          </form>
+        </div>
+      <% } else if (currUser && sweet.quantity > 0) { %>  
+        <div class="btns mb-3">
+          <a href="/sweets/<%= sweet._id %>/purchase-page" class="btn btn-primary">Purchase Now</a>
+        </div>
+      <% } else if (currUser) { %>
+        <div class="alert alert-warning">
+          Out of Stock
+        </div>
+      <% } %>
+
+      <!-- Rest of the template remains the same -->
+      <% if (currUser) { %>
+        <hr class="mt-5"/>
+        <div class="offset-2 mb-5">
+          <h3 class="mt-5 mb-3"><b>Leave A Review </b></h3>
+          <form action="/sweets/<%= sweet._id %>/reviews" method="POST" class="needs-validation" novalidate>
+            <label for="rating" class="form-label mb-1 mt-2"><b><i>Rating</i></b></label>
+            <fieldset class="starability-coinFlip">
+              <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+              <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
+            <div class="mt-2">
+              <label for="comment" class="form-label"><b><i>Comment</i></b></label>
+              <textarea name="review[comment]" id="comment" cols="30" rows="2" class="form-control" required></textarea>
+              <div class="invalid-feedback">Field cannot be empty!</div>
+            </div>
+            <button class="mt-4 mb-5 btn btn-outline-dark"><b>Submit</b></button>
+          </form>
+        </div>
+      <% } %>
+
+      <% if(sweet.reviews && sweet.reviews.length > 0) { %>
+        <hr />
+        <h4 class="mt-1">Reviews</h4>
+        <div class="row offset-1 mt-3 mb-4">
+          <% sweet.reviews.forEach(function(review) { %>
+            <div class="card col-5 ms-3 mb-3 review-card">
+              <div class="card-body">
+                <h5 class="card-title">@<%= review.author.username %></h5>
+                <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                <p class="card-text"><%= review.comment %></p>
+                <% if (cuUser && cuUser._id.equals(review.author._id)) { %>
+                  <form method="POST" action="/sweets/<%= sweet._id %>/reviews/<%= review._id %>?_method=DELETE">
+                    <button class="mt-2 mb-1 btn btn-sm btn-outline-dark">Delete</button>
+                  </form>
+                <% } %>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</body>

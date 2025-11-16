@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg bg-body-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/images/cake.png" alt="SugarCraft Logo" width="30" height="30">
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+      <div class="navbar-nav nav-underline align-items-center">
+        <h4 id="Logo-txt" class="mb-0 me-3">SugarCraft</h4>
+        <a class="nav-link" href="/sweets">Explore Sweets</a>
+      </div>
+
+      <div class="search navbar-nav mx-auto">
+        <form action="/sweets/search" method="GET" class="d-flex">
+          <input name="query" placeholder="Search sweets..." type="text" class="form-control me-2">
+          <button type="submit" class="btn btn-outline-success">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="navbar-nav nav-underline">
+        <!-- Show "Add Sweet" only to admin users -->
+        <% if(currUser && currUser.isAdmin) { %>
+          <a class="nav-link" href="/sweets/new">Add Sweet</a>
+        <% } %>
+        
+        <% if(!currUser) { %>
+          <a class="nav-link" href="/signup"><b>SignUp</b></a>
+          <a class="nav-link" href="/login"><b>LogIn</b></a>
+        <% } %> 
+        
+        <% if(currUser) { %>
+          <!-- Fixed My Purchases link -->
+          <a class="nav-link" href="/sweets/my-purchases">My Purchases</a>
+          <a class="nav-link" href="/logout"><b>Logout</b></a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,138 @@
+<% layout('./layouts/boilerplate') -%>
+<body>
+  <style>
+    #filters .filter {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #filters .filter:hover {
+      color: inherit;
+    }
+    #filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .filter {
+      text-align: center;
+      margin-right: 2rem;
+      opacity: 0.7;
+    }
+    .filter p {
+      font-size: 0.8rem;
+    }
+    ion-icon {
+      --ionicon-stroke-width: 30px;
+      font-size: 22px;
+      margin-bottom: -5px;
+    }
+    .filter:hover {
+      opacity: 1;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+  </style>
+
+  <div class="mt-4 mb-5">
+    <div id="filters">
+      <a href="/sweets?category=All" class="filter">
+        <div>
+          <ion-icon name="apps-outline"></ion-icon>
+        </div>
+        <p>All</p>
+      </a>
+      <a href="/sweets?category=chocolate" class="filter">
+        <div>
+          <img src="/images/cake2.png" alt="SugarCraft Logo" width="20" height="20">
+        </div>
+        <p>Chocolate</p>
+      </a>
+      <a href="/sweets?category=candy" class="filter">
+        <div>
+          <i class="fas fa-candy-cane"></i>
+        </div>
+        <p>Candy</p>
+      </a>
+      <a href="/sweets?category=baked" class="filter">
+        <div>
+          <i class="fas fa-cookie"></i>
+        </div>
+        <p>Baked</p>
+      </a>
+      <a href="/sweets?category=traditional" class="filter">
+        <div>
+          <i class="fas fa-star"></i>
+        </div>
+        <p>Traditional</p>
+      </a>
+      <a href="/sweets?category=sugar-free" class="filter">
+        <div>
+          <i class="fas fa-apple-alt"></i>
+        </div>
+        <p>Sugar Free</p>
+      </a>
+      <a href="/sweets?category=international" class="filter">
+        <div>
+          <i class="fas fa-globe"></i>
+        </div>
+        <p>International</p>
+      </a>
+    </div>
+  
+    <div class="row">
+      <% if (allSweets.length === 0) { %> 
+        <div class="col-12 text-center No-Msg">
+          <h3>No Sweets Found</h3> <!-- Updated message -->
+          <p>It looks like there are no sweets available for this category right now.</p> <!-- Updated message -->
+          <p><a href="/sweets/new" class="btn btn-dark">Add a New Sweet</a></p> <!-- Updated link -->
+          <p>Or browse other categories using the filters above.</p>
+        </div>
+      <% } else { %>
+        <div class="cardHolder mt-3 row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xsm-1">
+          <% for (let sweet of allSweets) { %> <!-- Changed from listing to sweet -->
+            <a href="/sweets/<%= sweet._id %>" class="listing-links">
+              <div class="card listing-card">
+                <img
+                  src="<%= sweet.image.url %>"
+                  class="card-img-top"
+                  alt="Sweet's Image"
+                  style="height: 15rem"
+                />
+                <div class="card-body">
+                  <p class="card-text d-flex justify-content-between border-bottom pb-2 mb-2">
+                    <b><%= sweet.name %></b> <!-- Changed from title to name -->
+                    <span>$ <%= sweet.price.toLocaleString("en-IN") %></span> <!-- Changed from pricePerDay to price -->
+                  </p>
+                  
+                  <!-- Updated properties for sweets -->
+                  <div class="d-flex flex-wrap justify-content-between align-items-center">
+                    <!-- Category and Quantity in one row -->
+                    <div class="d-flex align-items-center mb-2" style="width: 48%;">
+                      <i class="fas fa-tag me-2" style="color: #007bff;"></i>
+                      <span><%= sweet.category %></span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2" style="width: 48%;">
+                      <i class="fas fa-box me-2" style="color: #007bff;"></i>
+                      <span><%= sweet.quantity %> in stock</span> <!-- Updated from passengerCapacity to quantity -->
+                    </div>
+                  
+                    <!-- Weight and Allergens in one row -->
+                    <div class="d-flex align-items-center mt-1" style="width: 48%;">
+                      <i class="fas fa-weight me-2" style="color: #007bff;"></i>
+                      <span><%= sweet.weight || 'N/A' %></span> <!-- Updated from fuelType to weight -->
+                    </div>
+                    <div class="d-flex align-items-center mt-1" style="width: 48%;">
+                      <i class="fas fa-allergies me-2" style="color: #007bff;"></i>
+                      <span><%= sweet.allergens && sweet.allergens.length > 0 ? sweet.allergens.join(', ') : 'None' %></span> <!-- Updated from transmissionType to allergens -->
+                    </div>
+                  </div>                  
+                </div>
+              </div>
+            </a>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+  </div>  
+</body>

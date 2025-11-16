@@ -1,0 +1,43 @@
+<% layout('./layouts/boilerplate') -%>
+
+<div class="container mt-4">
+  <h2>Admin Dashboard</h2>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Quick Actions</h5>
+          <a href="/sweets/new" class="btn btn-primary btn-sm mb-2">Add New Sweet</a>
+          <a href="/sweets" class="btn btn-secondary btn-sm mb-2">View Public Site</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <h4>All Sweets</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Available</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% allSweets.forEach(sweet => { %>
+            <tr>
+              <td><%= sweet.name %></td>
+              <td>$<%= sweet.price %></td>
+              <td><%= sweet.quantityAvailable %></td>
+              <td><%= sweet.available ? 'Yes' : 'No' %></td>
+              <td>
+                <a href="/sweets/<%= sweet._id %>/edit" class="btn btn-warning btn-sm">Edit</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

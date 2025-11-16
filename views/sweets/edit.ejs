@@ -1,0 +1,84 @@
+<% layout('./layouts/boilerplate') -%>
+<body>
+  <div class="row mt-5">
+    <div class="col-8 offset-2">
+      <h3>Edit your Sweet</h3> <!-- Updated text -->
+      <form method="POST" action="/sweets/<%= sweet._id %>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data">
+        
+        <div class="mb-3">
+          <label for="name" class="form-label">Sweet Name</label> <!-- Updated label -->
+          <input name="sweet[name]" value="<%= sweet.name %>" type="text" class="form-control" required />
+          <div class="invalid-feedback">Field cannot be empty!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea name="sweet[description]" class="form-control" required><%= sweet.description %></textarea>
+          <div class="invalid-feedback">Field cannot be empty!</div>
+        </div>
+
+        <div class="mb-3">
+          Original Sweet Image <br> <!-- Updated text -->
+          <img src="<%= orgImgUrl %>">
+        </div>
+        
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Image</label>
+          <input name="sweet[image]" type="file" class="form-control" />
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label> <!-- Updated label -->
+            <input name="sweet[price]" value="<%= sweet.price %>" type="number" class="form-control" required />
+            <div class="invalid-feedback">Field cannot be empty!</div>
+          </div>
+
+          <div class="mb-3 col-md-4">
+            <label for="quantity" class="form-label">Quantity</label> <!-- Updated label -->
+            <input name="sweet[quantity]" value="<%= sweet.quantity %>" type="number" class="form-control" required />
+            <div class="invalid-feedback">Field cannot be empty!</div>
+          </div>
+
+          <div class="mb-3 col-md-4">
+            <label for="weight" class="form-label">Weight</label> <!-- Updated label -->
+            <input name="sweet[weight]" value="<%= sweet.weight %>" type="text" class="form-control" />
+            <div class="invalid-feedback">Field cannot be empty!</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label> <!-- Updated label -->
+          <select name="sweet[category]" class="form-select" required>
+            <option value="chocolate" <%= sweet.category === 'chocolate' ? 'selected' : '' %>>Chocolate</option>
+            <option value="candy" <%= sweet.category === 'candy' ? 'selected' : '' %>>Candy</option>
+            <option value="baked" <%= sweet.category === 'baked' ? 'selected' : '' %>>Baked</option>
+            <option value="traditional" <%= sweet.category === 'traditional' ? 'selected' : '' %>>Traditional</option>
+            <option value="sugar-free" <%= sweet.category === 'sugar-free' ? 'selected' : '' %>>Sugar Free</option>
+            <option value="international" <%= sweet.category === 'international' ? 'selected' : '' %>>International</option>
+          </select>
+          <div class="invalid-feedback">Please select a category!</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="ingredients" class="form-label">Ingredients (comma separated)</label> <!-- Updated label -->
+          <input name="sweet[ingredients]" value="<%= sweet.ingredients ? sweet.ingredients.join(', ') : '' %>" type="text" class="form-control" placeholder="Enter ingredients separated by commas"/>
+        </div>
+
+        <div class="mb-3">
+          <label for="allergens" class="form-label">Allergens</label> <!-- Updated label -->
+          <select name="sweet[allergens]" class="form-select" multiple>
+            <option value="Nuts" <%= sweet.allergens && sweet.allergens.includes('Nuts') ? 'selected' : '' %>>Nuts</option>
+            <option value="Dairy" <%= sweet.allergens && sweet.allergens.includes('Dairy') ? 'selected' : '' %>>Dairy</option>
+            <option value="Gluten" <%= sweet.allergens && sweet.allergens.includes('Gluten') ? 'selected' : '' %>>Gluten</option>
+            <option value="Soy" <%= sweet.allergens && sweet.allergens.includes('Soy') ? 'selected' : '' %>>Soy</option>
+            <option value="Eggs" <%= sweet.allergens && sweet.allergens.includes('Eggs') ? 'selected' : '' %>>Eggs</option>
+            <option value="None" <%= sweet.allergens && sweet.allergens.includes('None') ? 'selected' : '' %>>None</option>
+          </select>
+        </div>
+        
+        <button class="btn btn-primary mt-3 mb-5">Update</button>
+      </form>
+    </div>
+  </div>
+</body>

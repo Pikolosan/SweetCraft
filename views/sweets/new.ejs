@@ -1,0 +1,132 @@
+<% layout('./layouts/boilerplate') -%>
+<body>
+  <br><br>
+  <div class="row mb-5">
+    <div class="col-8 offset-2">
+      <h3>Add New Sweet</h3>
+      <form method="POST" action="/sweets" class="needs-validation" novalidate enctype="multipart/form-data">        
+        <div class="mb-3">
+          <label for="name" class="form-label">Sweet Name</label>
+          <input name="sweet[name]" placeholder="Enter sweet name" type="text" class="form-control" required />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Field cannot be empty!</div>
+        </div>
+        
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea name="sweet[description]" placeholder="Enter description of the sweet" class="form-control" required></textarea>
+          <div class="invalid-feedback">Field cannot be empty!</div>
+        </div>
+        
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Image</label>
+          <input name="sweet[image]" type="file" class="form-control" accept="image/*" required /> 
+          <div class="invalid-feedback">Please upload an image!</div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price ($)</label>
+            <input name="sweet[price]" placeholder="18.50" type="number" step="0.01" class="form-control" required />
+            <div class="invalid-feedback">Field cannot be empty!</div>
+          </div>
+          
+          <div class="mb-3 col-md-4">
+            <label for="quantityAvailable" class="form-label">Quantity Available</label>
+            <input name="sweet[quantity]" placeholder="30" type="number" class="form-control" required />
+            <div class="invalid-feedback">Field cannot be empty!</div>
+          </div>
+
+          <div class="mb-3 col-md-4">
+            <label for="weight" class="form-label">Weight/Portion</label>
+            <input name="sweet[weight]" placeholder="6 pieces, 250g, etc." type="text" class="form-control" required />
+            <div class="invalid-feedback">Field cannot be empty!</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select id="category" name="sweet[category]" class="form-control" required>
+            <option value="" disabled selected>Select Category</option>
+            <option value="baked">Baked</option>
+            <option value="chocolate">Chocolate</option>
+            <option value="candy">Candy</option>
+            <option value="traditional">Traditional</option>
+            <option value="sugar-free">Sugar Free</option>
+            <option value="international">International</option>
+          </select>
+          <div class="invalid-feedback">Please select a category!</div>
+        </div>
+
+        <!-- Ingredients -->
+        <div class="mb-3">
+          <label for="ingredients" class="form-label">Ingredients</label>
+          <textarea name="sweet[ingredients]" class="form-control" placeholder="List ingredients separated by commas (e.g., almond flour, sugar, butter)" required></textarea>
+          <div class="invalid-feedback">Field cannot be empty!</div>
+        </div>
+
+        <!-- Allergens -->
+        <div class="mb-3">
+          <label for="allergens" class="form-label">Allergens</label><br>
+          
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="Nuts" id="nuts">
+            <label class="form-check-label" for="nuts">Nuts</label>
+          </div>
+        
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="Dairy" id="dairy">
+            <label class="form-check-label" for="dairy">Dairy</label>
+          </div>
+        
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="Eggs" id="eggs">
+            <label class="form-check-label" for="eggs">Eggs</label>
+          </div>
+        
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="Gluten" id="gluten">
+            <label class="form-check-label" for="gluten">Gluten</label>
+          </div>
+        
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="Soy" id="soy">
+            <label class="form-check-label" for="soy">Soy</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="None" id="none">
+            <label class="form-check-label" for="none">None</label>
+          </div>
+        </div>
+
+        <!-- Sweet Type -->
+        <div class="mb-3">
+          <label for="sweetType" class="form-label">Sweet Type</label>
+          <select id="sweetType" name="sweet[sweetType]" class="form-control" required>
+            <option value="" disabled selected>Select Sweet Type</option>
+            <option value="cookies">Cookies</option>
+            <option value="cakes">Cakes</option>
+            <option value="chocolates">Chocolates</option>
+            <option value="candies">Candies</option>
+            <option value="pastries">Pastries</option>
+            <option value="desserts">Desserts</option>
+            <option value="traditional">Traditional Sweets</option>
+          </select>
+          <div class="invalid-feedback">Please select a sweet type!</div>
+        </div>
+
+        <!-- Availability -->
+        <div class="mb-3">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" name="sweet[available]" id="available" value="true" checked>
+            <input type="hidden" name="sweet[available]" value="false">
+            <label class="form-check-label" for="available">Available for Purchase</label>
+          </div>
+        </div>
+
+        <button class="btn btn-dark add-btn mb-5">Add Sweet</button>
+      </form>
+    </div>
+  </div>
+</body>

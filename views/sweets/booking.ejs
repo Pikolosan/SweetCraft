@@ -1,0 +1,40 @@
+<% layout('./layouts/boilerplate') -%>
+
+<h1 class="mt-5">Purchase Sweet</h1>
+<p>Sweet: <%= sweet.name %></p>
+<p>Price: $<%= sweet.price %> each</p>
+<p>Available: <%= sweet.quantity %> in stock</p>
+
+<form method="POST" action="/sweets/<%= sweetId %>/purchase" class="mb-5">
+    <input type="hidden" name="sweetId" value="<%= sweetId %>">
+
+    <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" class="form-control" 
+               min="1" max="<%= sweet.quantity %>" value="1" required>
+        <div class="form-text">Maximum <%= sweet.quantity %> available</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="category" class="form-label">Category:</label>
+        <input type="text" id="category" name="category" class="form-control" value="<%= sweet.category %>" readonly>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-5">Purchase Now</button>
+</form>
+
+<script>
+document.getElementById('quantity').addEventListener('change', function() {
+    const maxQuantity = <%- JSON.stringify(sweet.quantity) %>;
+    const currentQuantity = parseInt(this.value);
+    
+    if (currentQuantity > maxQuantity) {
+        this.value = maxQuantity;
+        alert(`Only ${maxQuantity} items available in stock.`);
+    }
+    
+    if (currentQuantity < 1) {
+        this.value = 1;
+    }
+});
+</script>
