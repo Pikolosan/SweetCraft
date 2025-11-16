@@ -2,6 +2,8 @@
 
 A full-stack web application for managing and purchasing delicious sweets, built with Node.js, Express, MongoDB, and EJS templating.
 
+**Video** : [Drive Link](https://drive.google.com/file/d/1EK-6Z4ubRwVfAtuK4i-iOkPLb-ZsVbyX/view?usp=sharing)
+
 ---
 
 ## 🚀 Features
