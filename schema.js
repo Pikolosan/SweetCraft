@@ -7,17 +7,16 @@ module.exports.sweetSchema = Joi.object({
         price: Joi.number().required().min(0),
         category: Joi.string().required().valid('baked', 'chocolate', 'candy', 'traditional', 'sugar-free', 'international'),
         quantity: Joi.number().required().min(0),
-        weight: Joi.string().required(), // Added required()
+        weight: Joi.string().required(),
         ingredients: Joi.string().required(),
         allergens: Joi.array().items(Joi.string()),
-        sweetType: Joi.string().required(), // ADD THIS - it's in your form
-        // available: Joi.boolean() // ADD THIS - it's in your form
-        // REMOVED: categories - not in your form
+        sweetType: Joi.string().required(),
+        available: Joi.boolean() // ADD THIS LINE BACK
     }).required()
 });
 
 module.exports.reviewSchema = Joi.object({
-    review: Joi.object({  
+    review: Joi.object({
         rating: Joi.number().required().min(1).max(5),
         comment: Joi.string().required()
     }).required()

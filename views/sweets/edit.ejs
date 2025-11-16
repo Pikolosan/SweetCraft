@@ -61,20 +61,71 @@
         </div>
 
         <div class="mb-4">
-          <label for="ingredients" class="form-label">Ingredients (comma separated)</label> <!-- Updated label -->
-          <input name="sweet[ingredients]" value="<%= sweet.ingredients ? sweet.ingredients.join(', ') : '' %>" type="text" class="form-control" placeholder="Enter ingredients separated by commas"/>
+          <label for="ingredients" class="form-label">Ingredients</label>
+          <input name="sweet[ingredients]" value="<%= sweet.ingredients || '' %>" type="text" class="form-control" placeholder="Enter ingredients separated by commas (e.g., almond flour, sugar, butter)"/>
         </div>
 
         <div class="mb-3">
-          <label for="allergens" class="form-label">Allergens</label> <!-- Updated label -->
-          <select name="sweet[allergens]" class="form-select" multiple>
-            <option value="Nuts" <%= sweet.allergens && sweet.allergens.includes('Nuts') ? 'selected' : '' %>>Nuts</option>
-            <option value="Dairy" <%= sweet.allergens && sweet.allergens.includes('Dairy') ? 'selected' : '' %>>Dairy</option>
-            <option value="Gluten" <%= sweet.allergens && sweet.allergens.includes('Gluten') ? 'selected' : '' %>>Gluten</option>
-            <option value="Soy" <%= sweet.allergens && sweet.allergens.includes('Soy') ? 'selected' : '' %>>Soy</option>
-            <option value="Eggs" <%= sweet.allergens && sweet.allergens.includes('Eggs') ? 'selected' : '' %>>Eggs</option>
-            <option value="None" <%= sweet.allergens && sweet.allergens.includes('None') ? 'selected' : '' %>>None</option>
+          <label for="sweetType" class="form-label">Sweet Type</label>
+          <select name="sweet[sweetType]" class="form-select" required>
+            <option value="" disabled>Select Sweet Type</option>
+            <option value="cookies" <%= sweet.sweetType === 'cookies' ? 'selected' : '' %>>Cookies</option>
+            <option value="cakes" <%= sweet.sweetType === 'cakes' ? 'selected' : '' %>>Cakes</option>
+            <option value="chocolates" <%= sweet.sweetType === 'chocolates' ? 'selected' : '' %>>Chocolates</option>
+            <option value="candies" <%= sweet.sweetType === 'candies' ? 'selected' : '' %>>Candies</option>
+            <option value="pastries" <%= sweet.sweetType === 'pastries' ? 'selected' : '' %>>Pastries</option>
+            <option value="desserts" <%= sweet.sweetType === 'desserts' ? 'selected' : '' %>>Desserts</option>
+            <option value="traditional" <%= sweet.sweetType === 'traditional' ? 'selected' : '' %>>Traditional Sweets</option>
           </select>
+          <div class="invalid-feedback">Please select a sweet type!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="allergens" class="form-label">Allergens</label><br>
+          
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="Nuts" id="nuts" 
+                  <%= sweet.allergens && sweet.allergens.includes('Nuts') ? 'checked' : '' %>>
+            <label class="form-check-label" for="nuts">Nuts</label>
+          </div>
+          
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="Dairy" id="dairy"
+                  <%= sweet.allergens && sweet.allergens.includes('Dairy') ? 'checked' : '' %>>
+            <label class="form-check-label" for="dairy">Dairy</label>
+          </div>
+          
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="Gluten" id="gluten"
+                  <%= sweet.allergens && sweet.allergens.includes('Gluten') ? 'checked' : '' %>>
+            <label class="form-check-label" for="gluten">Gluten</label>
+          </div>
+          
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="Soy" id="soy"
+                  <%= sweet.allergens && sweet.allergens.includes('Soy') ? 'checked' : '' %>>
+            <label class="form-check-label" for="soy">Soy</label>
+          </div>
+          
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="Eggs" id="eggs"
+                  <%= sweet.allergens && sweet.allergens.includes('Eggs') ? 'checked' : '' %>>
+            <label class="form-check-label" for="eggs">Eggs</label>
+          </div>
+          
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="sweet[allergens][]" value="None" id="none"
+                  <%= sweet.allergens && sweet.allergens.includes('None') ? 'checked' : '' %>>
+            <label class="form-check-label" for="none">None</label>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" name="sweet[available]" id="available" 
+                  <%= sweet.available ? 'checked' : '' %> value="true">
+            <label class="form-check-label" for="available">Available for Purchase</label>
+          </div>
         </div>
         
         <button class="btn btn-primary mt-3 mb-5">Update</button>

@@ -191,7 +191,7 @@ module.exports.purchasePage = async (req, res) => {
       req.flash("error", "Sweet not found.");
       return res.redirect('/sweets');
     }
-    res.render('listings/booking', { 
+    res.render('sweets/purchase', {  
       sweetId: sweet._id, 
       sweet,
       pageTitle: "Purchase Sweet"
